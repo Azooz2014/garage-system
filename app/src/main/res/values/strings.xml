@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Garage System</string>
+    <string name="title_activity_customer_edit_details">CustomerEditDetailsActivity</string>
+    <string name="label_first_name">First name</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="label_car_manufacturer">Car Manufacturer</string>
+    <string name="label_car_model">Car Model</string>
+    <string name="label_car_license">Car License Plate</string>
+    <string name="label_park_duration">Parking Duration</string>
+    <string name="btn_txt_submit">Submit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
