@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import io.blacketron.garagesystem.R
+import io.blacketron.garagesystem.data.local.GarageDB
+import io.blacketron.garagesystem.data.local.GarageDao
 import io.blacketron.garagesystem.model.Customer
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,12 +39,17 @@ class CustomerEditDetailsFragment : Fragment() {
 
     private lateinit var submitBtn: Button
 
+    private lateinit var dao: GarageDao
+    private lateinit var db: GarageDB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        db = GarageDB.getInstance(requireContext())
+        dao = db.garageDao()
     }
 
     override fun onCreateView(
@@ -59,6 +68,14 @@ class CustomerEditDetailsFragment : Fragment() {
         parkDurationTF = root.findViewById(R.id.parkDurationTextField)
 
         submitBtn = root.findViewById(R.id.buttonSubmit)
+
+        submitBtn.setOnClickListener(View.OnClickListener {
+            if(isInputValid()){
+                saveToDB(dao)
+                //TODO: Show snackbar and close the fragment with returned result.
+
+            }
+        })
 
         // Inflate the layout for this fragment
         return root
@@ -82,5 +99,108 @@ class CustomerEditDetailsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun saveToDB(dao: GarageDao){
+            //create new customer & save the text field values into the customer.
+            val customer = Customer(
+                firstName = firstNameTF.editText?.text.toString(),
+                lastName = lastNameTF.editText?.text.toString(),
+                phoneNumber = phoneNumberTF.editText?.text.toString(),
+                carManufacturer = carMfTF.editText?.text.toString(),
+                carModel = carModelTF.editText?.text.toString(),
+                carLicensePlate = carLicensePltTF.editText?.text.toString(),
+                duration = parkDurationTF.editText?.text.toString().toInt()
+            )
+
+            //insert the customer to db
+            lifecycleScope.launch {
+                dao.insertCustomer(customer)
+            }
+
+    }
+
+    private fun isInputValid(): Boolean{
+        if (
+            isFirstNameValid() and
+            isLastNameValid() and
+            isPhoneNumberValid() and
+            isCarMftValid() and
+            isCarModelValid() and
+            isCarLicenseValid() and
+            isParkDurationValid()
+        ) return true
+
+        return false
+    }
+
+    /*TextInput validation functions*/
+    private fun isFirstNameValid(): Boolean{
+        if (firstNameTF.editText!!.text.isEmpty()) {
+            showError(firstNameTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        firstNameTF.isErrorEnabled = false
+        return true
+    }
+
+    private fun isLastNameValid(): Boolean{
+        if (lastNameTF.editText!!.text.isEmpty()) {
+            showError(lastNameTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        lastNameTF.isErrorEnabled = false
+        return true
+    }
+
+    private fun isPhoneNumberValid(): Boolean{
+        if (phoneNumberTF.editText!!.text.isEmpty()) {
+            showError(phoneNumberTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        phoneNumberTF.isErrorEnabled = false
+        return true
+    }
+
+    private fun isCarMftValid(): Boolean{
+        if (carMfTF.editText!!.text.isEmpty()) {
+            showError(carMfTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        carMfTF.isErrorEnabled = false
+        return true
+    }
+
+    private fun isCarModelValid(): Boolean{
+        if (carModelTF.editText!!.text.isEmpty()) {
+            showError(carModelTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        carModelTF.isErrorEnabled = false
+        return true
+    }
+
+    private fun isCarLicenseValid(): Boolean{
+        if (carLicensePltTF.editText!!.text.isEmpty()) {
+            showError(carLicensePltTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        carLicensePltTF.isErrorEnabled = false
+        return true
+    }
+
+    private fun isParkDurationValid(): Boolean{
+        if (parkDurationTF.editText!!.text.isEmpty()) {
+            showError(parkDurationTF, getString(R.string.tf_error_msg))
+            return false
+        }
+        parkDurationTF.isErrorEnabled = false
+        return true
+    }
+
+    /*Showing TextInput error function*/
+    private fun showError(view: TextInputLayout, errorMsg: String){
+        view.isErrorEnabled = true
+        view.error = errorMsg
     }
 }

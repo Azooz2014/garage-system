@@ -10,5 +10,6 @@
         android:id="@+id/customerEditDetailsFragmentContainerView"
         android:name="io.blacketron.garagesystem.view.edit_details_screen.CustomerEditDetailsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_customer_edit_details" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

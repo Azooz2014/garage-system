@@ -9,7 +9,7 @@ data class Customer (
 
     @PrimaryKey()
     val id: String = UUID.randomUUID().toString(),
-    val firstName: String,
+    var firstName: String,
     val lastName: String,
     val phoneNumber: String,
     val carManufacturer: String,

@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //For testing
+        /*//For testing
         GlobalScope.launch {
             dao.insertCustomer(testingCustomer())
-        }
+        }*/
 
         //TODO: Move the FAB to the fragment.
 

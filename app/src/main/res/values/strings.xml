@@ -9,6 +9,5 @@
     <string name="label_car_license">Car License Plate</string>
     <string name="label_park_duration">Parking Duration</string>
     <string name="btn_txt_submit">Submit</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tf_error_msg">This cannot be empty!</string>
 </resources>
