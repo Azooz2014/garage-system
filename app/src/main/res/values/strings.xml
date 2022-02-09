@@ -10,4 +10,6 @@
     <string name="label_park_duration">Parking Duration</string>
     <string name="btn_txt_submit">Submit</string>
     <string name="tf_error_msg">This cannot be empty!</string>
+    <string name="toast_success">Information Saved!</string>
+    <string name="toast_failure">Information Discarded!</string>
 </resources>

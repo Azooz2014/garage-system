@@ -1,11 +1,12 @@
 package io.blacketron.garagesystem.view.edit_details_screen
 
+import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import io.blacketron.garagesystem.R
@@ -72,8 +73,9 @@ class CustomerEditDetailsFragment : Fragment() {
         submitBtn.setOnClickListener(View.OnClickListener {
             if(isInputValid()){
                 saveToDB(dao)
-                //TODO: Show snackbar and close the fragment with returned result.
 
+                activity?.setResult(Activity.RESULT_OK)
+                activity?.finish()
             }
         })
 
