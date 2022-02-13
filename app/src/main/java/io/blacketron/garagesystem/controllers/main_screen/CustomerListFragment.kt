@@ -4,16 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.blacketron.garagesystem.R
@@ -30,9 +29,10 @@ import io.blacketron.garagesystem.controllers.edit_details_screen.CustomerEditDe
 
 const val CUSTOMER_OBJECT = "customerObject"
 
-class CustomerListFragment : Fragment(){
+class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var mainAdapter: CustomerRecyclerViewAdapter
 
     private lateinit var addCustomerFab: FloatingActionButton
 
@@ -47,6 +47,7 @@ class CustomerListFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
@@ -89,34 +90,35 @@ class CustomerListFragment : Fragment(){
                 columnCount <= 1 -> LinearLayoutManager(context)
                 else -> GridLayoutManager(context, columnCount)
             }
-            adapter = CustomerRecyclerViewAdapter(customers, itemClickListener = {
+            adapter = CustomerRecyclerViewAdapter(customers, itemClickListener = { index ->
                 detailsFragmentLauncher.launch(
                     Intent(context, CustomerDetailsActivity::class.java).apply {
-                        putExtra(CUSTOMER_OBJECT, customers[it])
+                        putExtra(CUSTOMER_OBJECT, customers[index])
                     }
                 )
             })
         }
 
         //supplies the recycler view with the new observed list.
-        dao.getCustomers().observe(viewLifecycleOwner, Observer {
-            (recyclerView.adapter as CustomerRecyclerViewAdapter).setData(it)
+        mainAdapter = recyclerView.adapter as CustomerRecyclerViewAdapter
+        dao.getCustomers().observe(viewLifecycleOwner, Observer { list ->
+            mainAdapter.setData(list)
         })
     }
 
     private fun initializeCustomers(){
         /**
          * Observing data changes from [GarageDao.getCustomers]*/
-        dao.getCustomers().observe(viewLifecycleOwner, Observer {
-            customers = it
-            Log.i("List Fragment", "customers: $customers")
+        dao.getCustomers().observe(viewLifecycleOwner, Observer { list ->
+            customers = list
+//            Log.i("List Fragment", "customers: $customers")
         })
     }
 
     private fun setupFragmentLaunchers(){
         editDetailsFragmentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == Activity.RESULT_OK) {
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
                     Toast.makeText(context, getString(R.string.edit_details_toast_success), Toast.LENGTH_SHORT).show()
                     Log.i("List Fragment", "Activity Result is OK!")
                 } else {
@@ -126,8 +128,8 @@ class CustomerListFragment : Fragment(){
             }
 
         detailsFragmentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == Activity.RESULT_OK) {
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
                     Toast.makeText(context, "Thank you for paying :)", Toast.LENGTH_SHORT).show()
                     Log.i("List Fragment", "Activity Result is OK!")
                 } else {
@@ -135,6 +137,39 @@ class CustomerListFragment : Fragment(){
                     Log.i("List Fragment", "Activity Result is not OK!")
                 }
             }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main_menu, menu)
+
+        val searchMenuItem = menu.findItem(R.id.menu_search)
+        val searchView = searchMenuItem.actionView as SearchView
+
+        searchView.isSubmitButtonEnabled = true
+
+        searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null){
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query: String?){
+        val searchQuery = "%$query%"
+
+        dao.getCustomerByLicense(searchQuery).observe(viewLifecycleOwner, Observer { list ->
+            mainAdapter.setData(list)
+            customers = list
+//            Log.i("List Fragment", "searchDatabase: $list")
+        })
     }
 
     /*List testing functions*/

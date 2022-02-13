@@ -17,10 +17,8 @@ interface GarageDao {
     @Query("SELECT * FROM CustomerTable")
     fun getCustomers(): LiveData<List<Customer>>
 
-    /*Note: Probably to be converted into a LiveData<Customer> for ease of updating the list when
-    * the search functionality is implemented*/
-    @Query("SELECT * FROM CustomerTable WHERE carLicensePlate = :carLicensePlate")
-    suspend fun getCustomerByLicense(carLicensePlate: String): Customer
+    @Query("SELECT * FROM CustomerTable WHERE carLicensePlate LIKE :carLicensePlate")
+    fun getCustomerByLicense(carLicensePlate: String): LiveData<List<Customer>>
 
     @Query("SELECT * FROM CustomerTable WHERE id = :id")
     suspend fun getCustomerById(id: UUID): Customer
