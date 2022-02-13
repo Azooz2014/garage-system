@@ -1,4 +1,4 @@
-package io.blacketron.garagesystem.view.edit_details_screen
+package io.blacketron.garagesystem.controllers.edit_details_screen
 
 import android.app.Activity
 import android.os.Bundle
@@ -41,7 +41,6 @@ class CustomerEditDetailsFragment : Fragment() {
     private lateinit var submitBtn: Button
 
     private lateinit var dao: GarageDao
-    private lateinit var db: GarageDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +48,8 @@ class CustomerEditDetailsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        db = GarageDB.getInstance(requireContext())
-        dao = db.garageDao()
+
+        dao = GarageDB.getInstance(requireContext()).garageDao()
     }
 
     override fun onCreateView(
@@ -60,15 +59,7 @@ class CustomerEditDetailsFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_customer_edit_details, container, false)
 
-        firstNameTF = root.findViewById(R.id.firstNameTextField)
-        lastNameTF = root.findViewById(R.id.lastNameTextField)
-        phoneNumberTF = root.findViewById(R.id.phoneNumberTextField)
-        carMfTF = root.findViewById(R.id.carMfTextField)
-        carModelTF = root.findViewById(R.id.carModelTextField)
-        carLicensePltTF = root.findViewById(R.id.carLicensePltTextField)
-        parkDurationTF = root.findViewById(R.id.parkDurationTextField)
-
-        submitBtn = root.findViewById(R.id.buttonSubmit)
+        setupUI(root)
 
         submitBtn.setOnClickListener(View.OnClickListener {
             if(isInputValid()){
@@ -101,6 +92,18 @@ class CustomerEditDetailsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun setupUI(root: View){
+        firstNameTF = root.findViewById(R.id.firstNameTextField)
+        lastNameTF = root.findViewById(R.id.lastNameTextField)
+        phoneNumberTF = root.findViewById(R.id.phoneNumberTextField)
+        carMfTF = root.findViewById(R.id.carMfTextField)
+        carModelTF = root.findViewById(R.id.carModelTextField)
+        carLicensePltTF = root.findViewById(R.id.carLicensePltTextField)
+        parkDurationTF = root.findViewById(R.id.parkDurationTextField)
+
+        submitBtn = root.findViewById(R.id.buttonSubmit)
     }
 
     private fun saveToDB(dao: GarageDao){

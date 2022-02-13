@@ -1,20 +1,20 @@
-package io.blacketron.garagesystem.view.main_screen
+package io.blacketron.garagesystem.controllers.main_screen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.blacketron.garagesystem.databinding.FragmentCustomerListBinding
 import io.blacketron.garagesystem.model.Customer
-import io.blacketron.garagesystem.view.placeholder.PlaceholderContent.PlaceholderItem
+import io.blacketron.garagesystem.utils.ListDiffUtil
 
 /**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Refresh the list when new data is add to the database and implement onClick.
- *
+ * [RecyclerView.Adapter] that can display a [Customer] item.
  */
 class CustomerRecyclerViewAdapter(
-    private val values: List<Customer>
+    private var initialList: List<Customer>,
+    private val itemClickListener: (position: Int) -> Unit
 ) : RecyclerView.Adapter<CustomerRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,16 +29,32 @@ class CustomerRecyclerViewAdapter(
 
     }
 
+    /*
+    * Updates the recycler view list when items are
+    * inserted into the database. & refresh the list*/
+    fun setData(updatedList: List<Customer>){
+        val diffResult = DiffUtil.calculateDiff(ListDiffUtil(initialList, updatedList))
+        initialList = updatedList
+        diffResult.dispatchUpdatesTo(this)
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val item = initialList[position]
         holder.nameView.text = item.firstName
         holder.contentView.text = item.carLicensePlate
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = initialList.size
 
     inner class ViewHolder(binding: FragmentCustomerListBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                itemClickListener(bindingAdapterPosition)
+            }
+        }
+
         val nameView: TextView = binding.itemName
         val contentView: TextView = binding.itemContent
 

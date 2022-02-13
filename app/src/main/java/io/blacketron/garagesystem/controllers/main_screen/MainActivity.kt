@@ -1,4 +1,4 @@
-package io.blacketron.garagesystem.view.main_screen
+package io.blacketron.garagesystem.controllers.main_screen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

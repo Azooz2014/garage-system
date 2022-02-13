@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
-    tools:context=".view.edit_details_screen.CustomerEditDetailsFragment">
+    tools:context=".controllers.edit_details_screen.CustomerEditDetailsFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/firstNameTextField"

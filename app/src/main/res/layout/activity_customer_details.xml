@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.details_screen.CustomerDetailsActivity">
+    tools:context=".controllers.details_screen.CustomerDetailsActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/customerDetailsFragmentContainerView"
-        android:name="io.blacketron.garagesystem.view.details_screen.CustomerDetailsFragment"
+        android:name="io.blacketron.garagesystem.controllers.details_screen.CustomerDetailsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

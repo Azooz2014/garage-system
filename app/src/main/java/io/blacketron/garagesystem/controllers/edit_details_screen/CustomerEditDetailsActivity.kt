@@ -1,4 +1,4 @@
-package io.blacketron.garagesystem.view.edit_details_screen
+package io.blacketron.garagesystem.controllers.edit_details_screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

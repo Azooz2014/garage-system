@@ -1,4 +1,4 @@
-package io.blacketron.garagesystem.view.placeholder
+package io.blacketron.garagesystem.controllers.placeholder
 
 import java.util.ArrayList
 import java.util.HashMap

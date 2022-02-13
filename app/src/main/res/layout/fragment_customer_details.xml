@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.details_screen.CustomerDetailsFragment">
+    tools:context=".controllers.details_screen.CustomerDetailsFragment">
 
     <TextView
         android:id="@+id/firstNameLabel"
@@ -14,18 +14,16 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="First Name:"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/firstNameTV"
+        android:id="@+id/firstNameValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         tools:text="TextView"
-        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@+id/firstNameLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,20 +34,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Last Name:"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/firstNameLabel" />
 
     <TextView
-        android:id="@+id/lastNameTV"
+        android:id="@+id/lastNameValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         tools:text="TextView"
-        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@+id/lastNameLabel"
-        app:layout_constraintTop_toBottomOf="@id/firstNameTV" />
+        app:layout_constraintTop_toBottomOf="@id/firstNameValue" />
 
     <TextView
         android:id="@+id/carManLabel"
@@ -58,20 +54,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Car Manufacturer:"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lastNameLabel" />
 
     <TextView
-        android:id="@+id/carManTV"
+        android:id="@+id/carManValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         tools:text="TextView"
-        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@+id/carManLabel"
-        app:layout_constraintTop_toBottomOf="@id/lastNameTV" />
+        app:layout_constraintTop_toBottomOf="@id/lastNameValue" />
 
     <TextView
         android:id="@+id/carModelLabel"
@@ -80,20 +74,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Car Model:"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/carManLabel" />
 
     <TextView
-        android:id="@+id/carModelTV"
+        android:id="@+id/carModelValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         tools:text="TextView"
-        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@+id/carModelLabel"
-        app:layout_constraintTop_toBottomOf="@id/carManTV" />
+        app:layout_constraintTop_toBottomOf="@id/carManValue" />
 
     <TextView
         android:id="@+id/carLicensePltLabel"
@@ -102,20 +94,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Car License Plate:"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/carModelLabel" />
 
     <TextView
-        android:id="@+id/carLicensePltTV"
+        android:id="@+id/carLicensePltValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         tools:text="TextView"
-        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@+id/carLicensePltLabel"
-        app:layout_constraintTop_toBottomOf="@id/carModelTV" />
+        app:layout_constraintTop_toBottomOf="@id/carModelValue" />
 
     <TextView
         android:id="@+id/feesLabel"
@@ -124,20 +114,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Fees:"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/carLicensePltLabel" />
 
     <TextView
-        android:id="@+id/feesTV"
+        android:id="@+id/feesValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         tools:text="TextView"
-        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@+id/feesLabel"
-        app:layout_constraintTop_toBottomOf="@id/carLicensePltTV" />
+        app:layout_constraintTop_toBottomOf="@id/carLicensePltValue" />
 
     <Button
         android:id="@+id/payButton"

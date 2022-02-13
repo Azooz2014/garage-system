@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".view.main_screen.CustomerListFragment"
+        tools:context=".controllers.main_screen.CustomerListFragment"
         tools:listitem="@layout/fragment_customer_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

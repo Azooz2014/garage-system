@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GarageSystem">
         <activity
-            android:name=".view.details_screen.CustomerDetailsActivity"
+            android:name=".controllers.details_screen.CustomerDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".view.main_screen.MainActivity"/>
+            android:parentActivityName=".controllers.main_screen.MainActivity"/>
         <activity
-            android:name=".view.edit_details_screen.CustomerEditDetailsActivity"
+            android:name=".controllers.edit_details_screen.CustomerEditDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".view.main_screen.MainActivity"/>
+            android:parentActivityName=".controllers.main_screen.MainActivity"/>
         <activity
-            android:name=".view.main_screen.MainActivity"
+            android:name=".controllers.main_screen.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
