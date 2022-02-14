@@ -12,5 +12,21 @@
     <string name="tf_error_msg">This cannot be empty!</string>
     <string name="edit_details_toast_success">Information Saved!</string>
     <string name="edit_details_toast_failure">Information Discarded!</string>
-    <string name="search">Search</string>
+    <string name="menu_title_search">Search</string>
+    <string name="text_first_name">First name: %s</string>
+    <string name="text_license_plate">License Plate: %s</string>
+    <string name="text_label_fees">%s SAR</string>
+    <string name="details_label_first_name">First Name:</string>
+    <string name="details_label_last_name">Last Name:</string>
+    <string name="details_label_car_manufacturer">Car Manufacturer:</string>
+    <string name="details_label_car_model">Car Model:</string>
+    <string name="details_label_car_license_plate">Car License Plate:</string>
+    <string name="details_label_fees">Fees:</string>
+    <string name="btn_pay">Pay</string>
+    <string name="github_link"> <a href="https://github.com/Azooz2014">Azooz2014</a></string>
+    <string name="email">fazouz2010@gmail.com</string>
+    <string name="menu_about_body">Crafted with ❤ by Abdelaziz Faki</string>
+    <string name="menu_about_crafted">Crafted with </string>
+    <string name="menu_about_author"> by Abdelaziz Faki</string>
+    <string name="menu_title_about">about</string>
 </resources>

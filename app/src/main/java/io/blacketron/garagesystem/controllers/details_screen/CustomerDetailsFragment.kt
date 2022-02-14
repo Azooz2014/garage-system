@@ -12,20 +12,10 @@ import io.blacketron.garagesystem.R
 import io.blacketron.garagesystem.model.Customer
 import io.blacketron.garagesystem.controllers.main_screen.CUSTOMER_OBJECT
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
- * Use the [CustomerDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class CustomerDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var firstNameValue: TextView
     private lateinit var lastNameValue: TextView
@@ -42,11 +32,6 @@ class CustomerDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
         customer = activity?.intent?.getParcelableExtra(CUSTOMER_OBJECT)
     }
 
@@ -81,33 +66,21 @@ class CustomerDetailsFragment : Fragment() {
         carMfValue.text = customer?.carManufacturer
         carModelValue.text = customer?.carModel
         carLicensePltValue.text = customer?.carLicensePlate
-        feesValue.text = calculatedFees(price).toString()
+        feesValue.text = getString(R.string.text_label_fees, formattedFloat(calculatedFees(price)))
     }
 
     private fun calculatedFees(price: Float): Float{
         return price * (customer?.duration ?: 0)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CustomerDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) {
-            CustomerDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-
+    /** Formats the fees value accordingly.
+     * e.g if reminder of the division is 0 then there's no need to show the decimal numbers
+     * after the point because they're all zeros.
+     * else just show 2 places after the decimal*/
+    private fun formattedFloat(value: Float): String{
+        if(value % 1f == 0f){
+            return "%.0f".format(value)
         }
-
+        return "%.2f".format(value)
     }
 }

@@ -16,6 +16,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.blacketron.garagesystem.R
+import io.blacketron.garagesystem.controllers.about_screen.AboutActivity
+import io.blacketron.garagesystem.controllers.about_screen.AboutFragment
 import io.blacketron.garagesystem.data.local.GarageDB
 import io.blacketron.garagesystem.data.local.GarageDao
 import io.blacketron.garagesystem.model.Customer
@@ -38,6 +40,7 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
 
     private lateinit var editDetailsFragmentLauncher: ActivityResultLauncher<Intent>
     private lateinit var detailsFragmentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var aboutFragmentLauncher: ActivityResultLauncher<Intent>
 
     private lateinit var dao: GarageDao
 
@@ -111,7 +114,6 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
          * Observing data changes from [GarageDao.getCustomers]*/
         dao.getCustomers().observe(viewLifecycleOwner, Observer { list ->
             customers = list
-//            Log.i("List Fragment", "customers: $customers")
         })
     }
 
@@ -137,6 +139,24 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
                     Log.i("List Fragment", "Activity Result is not OK!")
                 }
             }
+
+        aboutFragmentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
+                    Log.i("List Fragment", "Activity Result is OK!")
+                } else {
+                    Log.i("List Fragment", "Activity Result is not OK!")
+                }
+            }
+
+        aboutFragmentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
+                    Log.i("List Fragment", "Activity Result is OK!")
+                } else {
+                    Log.i("List Fragment", "Activity Result is not OK!")
+                }
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -149,6 +169,18 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
         searchView.isSubmitButtonEnabled = true
 
         searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId){
+            R.id.menu_about -> {
+                //Launch About Fragment.
+                aboutFragmentLauncher.launch(Intent(context, AboutActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -168,41 +200,8 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
         dao.getCustomerByLicense(searchQuery).observe(viewLifecycleOwner, Observer { list ->
             mainAdapter.setData(list)
             customers = list
-//            Log.i("List Fragment", "searchDatabase: $list")
         })
     }
-
-    /*List testing functions*/
-    private fun testCustomerList(): List<Customer>{
-
-        var fakeCustomers: MutableList<Customer> = mutableListOf()
-
-        for(i in 1..10){
-            fakeCustomers.add(createFakeCustomer(i))
-        }
-        return fakeCustomers.toList()
-    }
-
-    private fun createFakeCustomer(id: Int): Customer{
-        return Customer(
-            id = id.toString(),
-            firstName = getRandomString(10),
-            lastName = getRandomString(10),
-            phoneNumber = getRandomString(7),
-            carManufacturer = getRandomString(4),
-            carModel = getRandomString(4),
-            carLicensePlate = getRandomString(4),
-            duration = 1
-        )
-    }
-
-    fun getRandomString(length: Int) : String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
-    }
-    /*End of list testing functions*/
 
     companion object {
 
@@ -218,22 +217,4 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
                 }
             }
     }
-
-    /*private suspend fun createCustomersList(dao: GarageDao): List<Customer> {
-        val customers: MutableList<Customer> = mutableListOf()
-
-        val result = CompletableDeferred<List<Customer>>()
-
-
-        lifecycleScope.launch {
-            lifecycleScope.async {
-                dao.getCustomers().forEach {
-                    customers.add(it)
-                }
-            }
-            result.complete(customers)
-        }
-
-        return result.await()
-    }*/
 }
