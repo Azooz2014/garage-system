@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import io.blacketron.garagesystem.R
 import io.blacketron.garagesystem.databinding.FragmentCustomerListBinding
 import io.blacketron.garagesystem.model.Customer
 import io.blacketron.garagesystem.utils.ListDiffUtil
@@ -40,11 +41,16 @@ class CustomerRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = initialList[position]
-        holder.nameView.text = item.firstName
-        holder.contentView.text = item.carLicensePlate
+        holder.nameView.text = holder.itemView.context
+            .getString(R.string.text_first_name, item.firstName)
+
+        holder.contentView.text = holder.itemView.context
+            .getString(R.string.text_license_plate, item.carLicensePlate)
     }
 
     override fun getItemCount(): Int = initialList.size
+
+    /*TODO: Updated list to be a Material CardView*/
 
     inner class ViewHolder(binding: FragmentCustomerListBinding) :
         RecyclerView.ViewHolder(binding.root) {

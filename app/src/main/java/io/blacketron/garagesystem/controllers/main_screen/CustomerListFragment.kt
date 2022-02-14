@@ -16,6 +16,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.blacketron.garagesystem.R
+import io.blacketron.garagesystem.controllers.about_screen.AboutActivity
+import io.blacketron.garagesystem.controllers.about_screen.AboutFragment
 import io.blacketron.garagesystem.data.local.GarageDB
 import io.blacketron.garagesystem.data.local.GarageDao
 import io.blacketron.garagesystem.model.Customer
@@ -38,6 +40,7 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
 
     private lateinit var editDetailsFragmentLauncher: ActivityResultLauncher<Intent>
     private lateinit var detailsFragmentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var aboutFragmentLauncher: ActivityResultLauncher<Intent>
 
     private lateinit var dao: GarageDao
 
@@ -137,6 +140,15 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
                     Log.i("List Fragment", "Activity Result is not OK!")
                 }
             }
+
+        aboutFragmentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
+                    Log.i("List Fragment", "Activity Result is OK!")
+                } else {
+                    Log.i("List Fragment", "Activity Result is not OK!")
+                }
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -149,6 +161,18 @@ class CustomerListFragment : Fragment(), SearchView.OnQueryTextListener{
         searchView.isSubmitButtonEnabled = true
 
         searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId){
+            R.id.menu_about -> {
+                //Launch About Fragment.
+                aboutFragmentLauncher.launch(Intent(context, AboutActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

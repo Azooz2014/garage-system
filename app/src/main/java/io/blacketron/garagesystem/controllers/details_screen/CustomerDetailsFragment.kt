@@ -81,11 +81,22 @@ class CustomerDetailsFragment : Fragment() {
         carMfValue.text = customer?.carManufacturer
         carModelValue.text = customer?.carModel
         carLicensePltValue.text = customer?.carLicensePlate
-        feesValue.text = calculatedFees(price).toString()
+        feesValue.text = formattedFloat(calculatedFees(price))
     }
 
     private fun calculatedFees(price: Float): Float{
         return price * (customer?.duration ?: 0)
+    }
+
+    /** Formats the fees value accordingly.
+     * e.g if reminder of the division is 0 then there's no need to show the decimal numbers
+     * after the point because they're all zeros.
+     * else just show 2 places after the decimal*/
+    private fun formattedFloat(value: Float): String{
+        if(value % 1f == 0f){
+            return "%.0f".format(value)
+        }
+        return "%.2f".format(value)
     }
 
     companion object {
